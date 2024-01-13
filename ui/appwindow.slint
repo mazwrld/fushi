@@ -1,33 +1,69 @@
-import { Button, VerticalBox , LineEdit} from "std-widgets.slint";
+// Importing widgets from "std-widgets.slint"
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
 
+// Defining the AppWindow component that inherits from Window
 export component AppWindow inherits Window {
+    // Property to store results
+    in property <string> results: "";
+
+    // Callback function for dividing income
+    callback divide_income(string);
+
+    // Setting background color for the window
     background: #171717;
+
+    // Main GridLayout for arranging UI elements
     GridLayout {
-    padding: 50px;
-    spacing: 25px;
-     Row {
-        Text {
-            text: "Enter Total Income";
-            horizontal-alignment: center;
-            font-size: 24px;
-            font-weight: 900;
-        }
-     }
-     Row {
-        LineEdit {
-            font-size: 14 * 1px;
-            horizontal-alignment: center;
-            placeholder-text: "Enter Your Number";
-            height: 35px;
+        padding: 50px;
+        spacing: 25px;
+
+        // Row for the instruction Text element
+        Row {
+            Text {
+                text: "Enter Total Income";
+                horizontal-alignment: center;
+                font-size: 24px;
+                font-weight: 900;
+            }
         }
 
-     }
-     Row {
-        Button {
-            primary: true;
-            text: "Calculate";
-            height: 35px;
+        // Row for the LineEdit to input income
+        Row {
+            income := LineEdit {
+                font-size: 14 * 1px;
+                horizontal-alignment: center;
+                placeholder-text: "Enter Your Number";
+                height: 35px;
+            }
         }
-     }
-   }
+
+        // Row for the "Calculate" Button
+        Row {
+            Button {
+                primary: true;
+                text: "Calculate";
+                height: 35px;
+                // Click event connected to divideIncome callback
+                clicked => { divide_income(income.text) }
+            }
+        }
+
+        // Row for the VerticalBox containing a Rectangle with results Text
+        Row {
+            VerticalBox {
+                Rectangle {
+                    height: 100px;
+                    border-radius: 5px;
+                    background: #e7d9c3;
+                    Text {
+                        color: #171717;
+                        font-size: 15px;
+                        font-weight: 300;
+                        // Displaying results in the Text element
+                        text: root.results;
+                    }
+                }
+            }
+        }
+    }
 }
